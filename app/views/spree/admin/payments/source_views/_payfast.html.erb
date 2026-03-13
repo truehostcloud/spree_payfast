@@ -1,0 +1,16 @@
+<%# Admin read-only payment source view %>
+<% source = payment.source %>
+
+<dl class="row">
+  <dt class="col-sm-4"><%= Spree.t('payfast.order_reference') %></dt>
+  <dd class="col-sm-8"><%= source.m_payment_id.presence || '—' %></dd>
+
+  <dt class="col-sm-4"><%= Spree.t('payfast.pf_payment_id') %></dt>
+  <dd class="col-sm-8"><%= source.pf_payment_id.presence || '—' %></dd>
+
+  <dt class="col-sm-4"><%= Spree.t('payfast.payment_status') %></dt>
+  <dd class="col-sm-8"><%= source.payment_status.presence || '—' %></dd>
+
+  <dt class="col-sm-4"><%= Spree.t('payfast.amount_gross') %></dt>
+  <dd class="col-sm-8"><%= source.amount_gross.present? ? "R #{source.amount_gross}" : '—' %></dd>
+</dl>
