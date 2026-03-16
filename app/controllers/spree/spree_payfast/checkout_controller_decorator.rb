@@ -39,7 +39,8 @@ module Spree
           @order,
           return_url: spree.payfast_return_url,
           cancel_url: spree.payfast_cancel_url,
-          notify_url: spree.payfast_itn_url
+          # notify_url: spree.payfast_itn_url
+          notify_url: "https://11e2-2605-59c1-45f2-3710-e3a2-da9c-f264-3de3.ngrok-free.app#{spree.payfast_itn_path}"
         )
 
         payfast_redirect_url = "#{gateway.payfast_url}?#{URI.encode_www_form(payment_data)}"

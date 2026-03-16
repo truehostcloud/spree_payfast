@@ -61,6 +61,23 @@ Ensure your store is publicly accessible online (or use a tool like Ngrok for lo
 
 You do not need to manually configure this URL in the PayFast dashboard; the gem automatically sends this `notify_url` to PayFast during the checkout redirect.
 
+### ITN Host Validation
+
+The ITN validator resolves PayFast hostnames and checks the webhook caller IP against the resolved addresses.
+
+You can override the host list with the `PAYFAST_VALIDATION_HOSTS` environment variable (comma-separated):
+
+```bash
+PAYFAST_VALIDATION_HOSTS=www.payfast.co.za,sandbox.payfast.co.za,w1w.payfast.co.za,w2w.payfast.co.za
+```
+
+Default hosts (when the env var is not set):
+
+- `www.payfast.co.za`
+- `sandbox.payfast.co.za`
+- `w1w.payfast.co.za`
+- `w2w.payfast.co.za`
+
 ---
 
 ## Testing
