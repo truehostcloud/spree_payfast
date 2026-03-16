@@ -35,23 +35,50 @@ RSpec.describe Spree::Gateway::Payfast, type: :model do
   end
 
   describe '#generate_signature' do
-    it 'generates the correct MD5 signature matching PayFast documentation' do
-      # Test case derived from standard PayFast MD5 examples
+    it 'generates the correct MD5 signature matching PayFast field order and encoding' do
       data = {
-        merchant_id: '10000100',
-        merchant_key: '46f0cd694581a',
-        return_url: 'http://example.com/return',
         amount: '100.00',
-        item_name: 'Test Item'
+        item_name: 'Test Item',
+        return_url: 'http://example.com/return',
+        merchant_key: '46f0cd694581a',
+        merchant_id: '10000100'
       }
 
-      # Expected param string:
-      # merchant_id=10000100&merchant_key=46f0cd694581a&return_url=http%3A%2F%2Fexample.com%2Freturn&amount=100.00&item_name=Test%20Item&passphrase=spree123
-      # MD5 of that exact string
-      expected_string = "merchant_id=10000100&merchant_key=46f0cd694581a&return_url=http%3A%2F%2Fexample.com%2Freturn&amount=100.00&item_name=Test%20Item&passphrase=spree123"
+      expected_string = [
+        'merchant_id=10000100&merchant_key=46f0cd694581a',
+        'return_url=http%3A%2F%2Fexample.com%2Freturn&amount=100.00',
+        'item_name=Test+Item&passphrase=spree123'
+      ].join('&')
       expected_md5 = Digest::MD5.hexdigest(expected_string)
 
       expect(gateway.generate_signature(data)).to eq(expected_md5)
+    end
+
+    it 'normalizes plus signs to spaces before encoding' do
+      data = {
+        merchant_id: '10000100',
+        merchant_key: '46f0cd694581a',
+        item_name: 'A+B Product'
+      }
+
+      expected_string = 'merchant_id=10000100&merchant_key=46f0cd694581a&item_name=A+B+Product&passphrase=spree123'
+      expect(gateway.generate_signature(data)).to eq(Digest::MD5.hexdigest(expected_string))
+    end
+
+    it 'includes extra keys after known checkout fields in their original order' do
+      data = {
+        merchant_key: '46f0cd694581a',
+        merchant_id: '10000100',
+        payment_status: 'COMPLETE',
+        amount_gross: '100.00'
+      }
+
+      expected_string = [
+        'merchant_id=10000100&merchant_key=46f0cd694581a',
+        'payment_status=COMPLETE&amount_gross=100.00&passphrase=spree123'
+      ].join('&')
+
+      expect(gateway.generate_signature(data)).to eq(Digest::MD5.hexdigest(expected_string))
     end
   end
 

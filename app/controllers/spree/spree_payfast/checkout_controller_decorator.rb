@@ -16,14 +16,13 @@ module Spree
         false
       end
 
-      # After the confirm step is submitted we build the redirect URL and send
-      # the customer to PayFast's hosted engine.
       def update
         super
 
         return unless transition_succeeded_to?(:confirm) && payfast_chosen?
 
         redirect_to_payfast
+        nil
       end
 
       private
@@ -43,7 +42,15 @@ module Spree
           notify_url: spree.payfast_itn_url
         )
 
-        redirect_to "#{gateway.payfast_url}?#{payment_data.to_query}", allow_other_host: true
+        payfast_redirect_url = "#{gateway.payfast_url}?#{URI.encode_www_form(payment_data)}"
+
+        if performed?
+          response.location = payfast_redirect_url
+          response.status = 302 unless response.redirect?
+          return
+        end
+
+        redirect_to payfast_redirect_url, allow_other_host: true
       end
     end
   end
