@@ -38,6 +38,11 @@ module Spree
       cycles
     ].freeze
 
+    # Only show PayFast for ZAR orders
+    def available_for_order?(order)
+      order.currency.to_s.upcase == 'ZAR'
+    end
+
     preference :merchant_id, :string
     preference :merchant_key, :string
     preference :passphrase, :string
