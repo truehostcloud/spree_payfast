@@ -1,0 +1,21 @@
+<%
+  # PayFast checkout payment partial
+  # Shown at the payment step; creates hidden source fields and renders PayFast branding.
+  param_prefix = "payment_source[#{payment_method.id}]"
+%>
+
+<div class="payfast-payment-option">
+  <div class="payfast-logo-wrapper">
+    <%= image_tag 'payfast_logo.png', alt: 'PayFast', style: 'height:40px; vertical-align:middle; margin-right:8px;' %>
+  </div>
+
+  <p class="payfast-description">
+    Pay securely via <strong>Credit/Debit Card</strong>, <strong>Instant EFT</strong>,
+    or <strong>Zapper</strong> — powered by PayFast. You will be redirected to the
+    PayFast secure payment portal to complete your purchase.
+  </p>
+
+  <%# Hidden source fields required by the order decorator to build a PayfastTransaction %>
+  <%= hidden_field_tag "#{param_prefix}[m_payment_id]", @order.number %>
+  <%= hidden_field_tag "#{param_prefix}[status]", 'pending' %>
+</div>

@@ -1,0 +1,12 @@
+en:
+  payfast:
+    payment_method:     'PayFast'
+    description:        'Pay securely via Credit/Debit Card, Instant EFT, or Zapper'
+    payment_success:    'Your PayFast payment was successful. Thank you for your order!'
+    payment_cancelled:  'Your PayFast payment was cancelled. Please try again or choose a different payment method.'
+    order_reference:    'Order Reference (m_payment_id)'
+    pf_payment_id:      'PayFast Payment ID'
+    payment_status:     'PayFast Status'
+    amount_gross:       'Gross Amount'
+    itn_verified:       'ITN signature verified successfully'
+    itn_invalid_signature: 'ITN signature validation failed'
