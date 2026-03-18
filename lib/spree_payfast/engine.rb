@@ -18,6 +18,12 @@ module SpreePayfast
       SpreePayfast::Config = SpreePayfast::Configuration.new
     end
 
+    initializer 'spree_payfast.assets' do |app|
+      # Ensure the logo used in the PayFast checkout flow is available in production
+      # even when the host app does not explicitly declare it in its manifest.
+      app.config.assets.precompile += %w[payfast_logo.png]
+    end
+
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)

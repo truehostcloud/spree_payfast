@@ -47,7 +47,7 @@ bundle exec rails g spree_payfast:install
     - **Passphrase** (Must match the salt passphrase set in your PayFast dashboard)
     - **Test Mode** (Check for Sandbox, uncheck for Live)
 
-> **Important:** Your Spree store must be configured to use **ZAR** (South African Rand) as its currency. PayFast will only be available for ZAR orders.
+> **Important:** PayFast will only be available for orders where the currency is **ZAR** (South African Rand). The gateway is hidden for all other currencies at runtime.
 
 ---
 
