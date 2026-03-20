@@ -169,13 +169,14 @@ module SpreePayfast
           @order.next!
         end
       rescue StateMachines::InvalidTransition => e
-        Rails.logger.warn "[SpreePayfast] ITN: Order completion transition failed for #{@order.number} - #{e.message}"
+        Rails.logger.warn "[SpreePayfast] ITN: Order completion transition failed for #{@order.number} - #{e.message} (#{@order.errors.full_messages.join(', ')})"
       end
 
       def finalize_paid_order_from_itn
         return unless order_marked_paid?
 
         @order.update_columns(state: 'complete', completed_at: Time.current, updated_at: Time.current)
+        @order.reload
         @order.finalize!
         @order.update_with_updater!
       end
