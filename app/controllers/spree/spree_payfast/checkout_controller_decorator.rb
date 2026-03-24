@@ -35,11 +35,13 @@ module Spree
         gateway = @payfast_payment_method
         return unless gateway
 
+        host = current_store.url_or_custom_domain
+
         payment_data = gateway.build_payment_data(
           @order,
-          return_url: spree.payfast_return_url,
-          cancel_url: spree.payfast_cancel_url,
-          notify_url: spree.payfast_itn_url
+          return_url: spree.payfast_return_url(host: host),
+          cancel_url: spree.payfast_cancel_url(host: host),
+          notify_url: spree.payfast_itn_url(host: host)
         )
 
         payfast_redirect_url = "#{gateway.payfast_url}?#{URI.encode_www_form(payment_data)}"

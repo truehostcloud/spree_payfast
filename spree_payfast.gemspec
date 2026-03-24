@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary     = 'PayFast payment gateway integration for Spree Commerce'
   s.description = 'Integrates PayFast (Credit/Debit Card, Instant EFT, Zapper) as a payment ' \
                   'option in Spree Commerce using the hosted redirect (Custom Integration) flow.'
-  s.required_ruby_version = '>= 2.7'
+  s.required_ruby_version = '>= 3.3'
 
   s.author   = 'TrueHost Cloud'
   s.email    = 'dev@truehostcloud.com'
@@ -21,11 +21,10 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  spree_version = '>= 4.4.0'
+  spree_version = '~> 5.0'
   s.add_dependency 'httparty'
   s.add_dependency 'spree', spree_version
-  s.add_dependency 'spree_backend', spree_version
-  s.add_dependency 'spree_extension'
+  s.add_dependency 'spree_admin', spree_version
 
   s.add_development_dependency 'spree_dev_tools'
 end

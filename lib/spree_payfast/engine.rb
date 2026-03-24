@@ -7,7 +7,7 @@ module SpreePayfast
     engine_name 'spree_payfast'
 
     config.after_initialize do |app|
-      app.config.spree.payment_methods << Spree::Gateway::Payfast
+      app.config.spree.payment_methods << Spree::Gateway::Payfast unless app.config.spree.payment_methods.include?(Spree::Gateway::Payfast)
     end
 
     config.generators do |g|
