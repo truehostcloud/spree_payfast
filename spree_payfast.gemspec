@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary     = 'PayFast payment gateway integration for Spree Commerce'
   s.description = 'Integrates PayFast (Credit/Debit Card, Instant EFT, Zapper) as a payment ' \
                   'option in Spree Commerce using the hosted redirect (Custom Integration) flow.'
-  s.required_ruby_version = '>= 3.1'
+  s.required_ruby_version = '>= 3.3'
 
   s.author   = 'TrueHost Cloud'
   s.email    = 'dev@truehostcloud.com'
